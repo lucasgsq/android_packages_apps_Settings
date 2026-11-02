@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lineage_security_backport_title">Backports de segurança da LineageOS</string>
+    <string name="lineage_security_backport_unverified">Não verificado</string>
+    <string name="lineage_security_backport_summary">%1$s\nLotes portados verificados; nível oficial de segurança mantido.</string>
+</resources>
