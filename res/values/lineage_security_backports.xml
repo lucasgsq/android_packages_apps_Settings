@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Audited monthly batch reference (yyyy-MM), not an official security patch level.
+         Keep empty until the device sources have been audited. -->
+    <string name="config_lineageSecurityBackportMonth" translatable="false"></string>
+    <string name="lineage_security_backport_title">LineageOS security backports</string>
+    <string name="lineage_security_backport_unverified">Not verified</string>
+    <string name="lineage_security_backport_summary">%1$s\nVerified backport batches; official security patch level unchanged.</string>
+</resources>
