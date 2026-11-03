@@ -722,9 +722,9 @@ public class EnabledNetworkModePreferenceController extends
          */
         private void addLteEntry(int value) {
             if (showNrList()) {
-                mEntries.add(mContext.getString(R.string.network_lte_pure));
+                mEntries.add(mContext.getString(getQuarkNetworkLabel(R.string.network_lte_pure, value)));
             } else {
-                mEntries.add(mContext.getString(R.string.network_lte));
+                mEntries.add(mContext.getString(getQuarkNetworkLabel(R.string.network_lte, value)));
             }
             mEntriesValue.add(value);
         }
@@ -734,15 +734,15 @@ public class EnabledNetworkModePreferenceController extends
          */
         private void add4gEntry(int value) {
             if (showNrList()) {
-                mEntries.add(mContext.getString(R.string.network_4G_pure));
+                mEntries.add(mContext.getString(getQuarkNetworkLabel(R.string.network_4G_pure, value)));
             } else {
-                mEntries.add(mContext.getString(R.string.network_4G));
+                mEntries.add(mContext.getString(getQuarkNetworkLabel(R.string.network_4G, value)));
             }
             mEntriesValue.add(value);
         }
 
         private void add3gEntry(int value) {
-            mEntries.add(mContext.getString(R.string.network_3G));
+            mEntries.add(mContext.getString(getQuarkNetworkLabel(R.string.network_3G, value)));
             mEntriesValue.add(value);
         }
 
@@ -799,8 +799,26 @@ public class EnabledNetworkModePreferenceController extends
             return mSummary;
         }
 
+        // Label only the combined GSM modes; keep LTE-only/WCDMA-only and other models intact.
+        private int getQuarkNetworkLabel(int original, int networkMode) {
+            if (!"quark_umts".equals(android.os.Build.DEVICE)) {
+                return original;
+            }
+            if (networkMode == TelephonyManagerConstants.NETWORK_MODE_LTE_GSM_WCDMA
+                    && (original == R.string.network_lte || original == R.string.network_lte_pure
+                    || original == R.string.network_4G || original == R.string.network_4G_pure)) {
+                return R.string.quark_network_4g_preferred;
+            }
+            if (networkMode == TelephonyManagerConstants.NETWORK_MODE_WCDMA_PREF
+                    && original == R.string.network_3G) {
+                return R.string.quark_network_3g_preferred;
+            }
+            return original;
+        }
+
         private void setSummary(int summaryResId) {
-            setSummary(mContext.getString(summaryResId));
+            setSummary(mContext.getString(getQuarkNetworkLabel(
+                    summaryResId, getPreferredNetworkMode())));
         }
 
         private void setSummary(String summary) {
